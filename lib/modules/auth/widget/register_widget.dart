@@ -154,6 +154,7 @@ class RegisterWidget extends StatelessWidget {
                 Expanded(child: Divider(thickness: 1, color: Colors.black)),
                 SizedBox(width: 16),
               ],
+              
             ),
             SizedBox(height: 20),
             GestureDetector(

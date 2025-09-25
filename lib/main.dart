@@ -62,6 +62,7 @@ class MyApp extends StatelessWidget {
       theme: AppThemes.lightTheme,
       getPages: AppPages.route,
       initialRoute: initialRoute,
+      debugShowCheckedModeBanner: false,
       // home: IntroScreen(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

@@ -1,82 +1,152 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:okiku/modules/home/view/home_screen.dart';
+import 'package:okiku/modules/navbar/navbar_controller.dart';
 import 'package:okiku/themes/app_color.dart';
 
 class MyNavbar extends StatelessWidget {
   MyNavbar({super.key});
-  final RxInt selectedIndex = 0.obs;
+  final NavbarController navbarController = Get.find<NavbarController>();
 
-  final List<Widget> _screens = [HomeScreen(),  HomeScreen(), HomeScreen()];
+  final List<Widget> _screens = [
+    HomeScreen(),
+    HomeScreen(),
+    HomeScreen(),
+    HomeScreen(),
+    HomeScreen(),
+  ];
 
-  final List<IconData> _icons = [Icons.home, Icons.history, Icons.qr_code];
-
-  void _onTapIndex(int index) {
-    if (index == 1) return;
-    selectedIndex.value = index < 1 ? index : index - 1;
-   
-  }
+  final List<IconData> _icons = [
+    Icons.edit,
+    Icons.article,
+    Icons.home,
+    Icons.person,
+    Icons.settings,
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        body: _screens[selectedIndex.value],
-        bottomNavigationBar: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(50),
-            topRight: Radius.circular(50),
-          ),
-          child: PreferredSize(
-            preferredSize: Size.fromHeight(20),
-            child: BottomAppBar(
-              shape: const CircularNotchedRectangle(),
-              color: Colors.white,
-              elevation: 8,
-              child: SizedBox(
-                // height: 10, // ✅ Tinggi navbar diatur di sini
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(3, (index) {
-                    if (index == 1) {
-                      return const SizedBox(width: 50); // space untuk FAB
+    return Scaffold(
+      body: Obx(
+        () => Stack(
+          children: [
+            _screens[navbarController.selectedIndex.value],
+
+            //
+            // buildNavbar(icons: _icons, navbarController: navbarController),
+            Obx(
+              () => AnimatedPositioned(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                left: 0,
+                right: 0,
+                bottom: navbarController.isExpanded.value ? 20 : -80,
+                child: GestureDetector(
+                  onVerticalDragEnd: (details) {
+                    if (details.primaryVelocity != null) {
+                      if (details.primaryVelocity! > 6) {
+                        navbarController.isExpanded.value = false;
+                      } else if (details.primaryVelocity! < -6) {
+                        navbarController.isExpanded.value = true;
+                      }
                     }
-
-                    final iconIndex = index < 1 ? index : index - 1;
-                    final isSelected = selectedIndex.value == iconIndex;
-
-                    return InkWell(
-                      onTap: () => _onTapIndex(index),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min, // penting
-                        children: [
-                          Icon(
-                            _icons[iconIndex],
-                            size: 26,
-                            color: isSelected ? Colors.black : Colors.grey,
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                  },
+                  child:
+                      navbarController.isExpanded.value
+                          ? buildNavbar(
+                            icons: _icons,
+                            navbarController: navbarController,
+                          )
+                          : _buildIndicator(),
                 ),
               ),
             ),
-          ),
+          ],
         ),
-        floatingActionButton: SizedBox(
-          width: 70, // ubah sesuai kebutuhan
-          height: 70,
-          child: FloatingActionButton(
-            onPressed: () {},
-            shape: const CircleBorder(),
-            backgroundColor: AppColor.accentBurntOrange,
-            child: const Icon(Icons.add, size: 20), // ikon juga dikecilkan
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
+}
+
+// ignore: camel_case_types
+class buildNavbar extends StatelessWidget {
+  const buildNavbar({
+    super.key,
+    required List<IconData> icons,
+    required this.navbarController,
+  }) : _icons = icons;
+
+  final List<IconData> _icons;
+  final NavbarController navbarController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: AlignmentGeometry.bottomCenter,
+      child: Container(
+        margin: EdgeInsets.only(bottom: Get.height * 0.05),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        // height: 20,
+        width: Get.width * 0.7,
+        decoration: BoxDecoration(
+          color: AppColor.textDark,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ...List.generate(_icons.length, (index) {
+              bool isSelected = navbarController.selectedIndex.value == index;
+              return GestureDetector(
+                onTap: () => navbarController.changePage(index),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        _icons[index],
+                        size: 28,
+                        color:
+                            isSelected
+                                ? AppColor.primaryYellow
+                                : AppColor.backgroundCream,
+                      ),
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
+                        margin: EdgeInsets.only(top: 6),
+                        height: 3,
+                        width: isSelected ? 20 : 0,
+                        decoration: BoxDecoration(
+                          color: AppColor.primaryYellow,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Widget _buildIndicator() {
+  return Align(
+    alignment: Alignment.bottomCenter,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 50.0),
+      child: Container(
+        height: Get.height * 0.07,
+        width: Get.width * 0.4,
+        decoration: BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(3),
+        ),
+      ),
+    ),
+  );
 }
