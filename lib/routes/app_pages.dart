@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:okiku/binding/auth/AuthBinding.dart';
+import 'package:okiku/binding/chat/ChatBinding.dart';
 import 'package:okiku/binding/detailUser/DetailUserBinding.dart';
 import 'package:okiku/binding/home/HomeBinding.dart';
 import 'package:okiku/modules/auth/view/intro_screen.dart';
 import 'package:okiku/modules/auth/view/login_screen.dart';
+import 'package:okiku/modules/chat/screen/chat_screen.dart';
 import 'package:okiku/modules/detail/view/create_detail_view.dart';
 import 'package:okiku/modules/home/view/home_screen.dart';
 import 'package:okiku/navbar.dart';
@@ -40,5 +42,13 @@ class AppPages {
 
     //HOME
     GetPage(name: Routes.HOME, page: () => HomeScreen()),
+
+
+GetPage(
+      name: Routes.CHAT,
+      page: () => ChatScreen(),
+      binding: Chatbinding(),
+    ),
+
   ];
 }

@@ -27,50 +27,55 @@ class MyNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true, // penting agar keyboard tidak nutup layout
       body: Obx(
-        () => Stack(
-          children: [
-            _screens[navbarController.selectedIndex.value],
+        () {
+          // deteksi apakah keyboard muncul
+          final bool isKeyboardVisible =
+              MediaQuery.of(context).viewInsets.bottom > 0;
 
-            //
-            // buildNavbar(icons: _icons, navbarController: navbarController),
-            Obx(
-              () => AnimatedPositioned(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                left: 0,
-                right: 0,
-                bottom: navbarController.isExpanded.value ? 20 : -80,
-                child: GestureDetector(
-                  onVerticalDragEnd: (details) {
-                    if (details.primaryVelocity != null) {
-                      if (details.primaryVelocity! > 6) {
-                        navbarController.isExpanded.value = false;
-                      } else if (details.primaryVelocity! < -6) {
-                        navbarController.isExpanded.value = true;
-                      }
-                    }
-                  },
-                  child:
-                      navbarController.isExpanded.value
-                          ? buildNavbar(
-                            icons: _icons,
-                            navbarController: navbarController,
-                          )
+          return Stack(
+            children: [
+              _screens[navbarController.selectedIndex.value],
+
+              // hanya tampilkan navbar kalau keyboard tidak muncul
+              if (!isKeyboardVisible)
+                Obx(
+                  () => AnimatedPositioned(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    left: 0,
+                    right: 0,
+                    bottom: navbarController.isExpanded.value ? 20 : -80,
+                    child: GestureDetector(
+                      onVerticalDragEnd: (details) {
+                        if (details.primaryVelocity != null) {
+                          if (details.primaryVelocity! > 6) {
+                            navbarController.isExpanded.value = false;
+                          } else if (details.primaryVelocity! < -6) {
+                            navbarController.isExpanded.value = true;
+                          }
+                        }
+                      },
+                      child: navbarController.isExpanded.value
+                          ? BuildNavbar(
+                              icons: _icons,
+                              navbarController: navbarController,
+                            )
                           : _buildIndicator(),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
-// ignore: camel_case_types
-class buildNavbar extends StatelessWidget {
-  const buildNavbar({
+class BuildNavbar extends StatelessWidget {
+  const BuildNavbar({
     super.key,
     required List<IconData> icons,
     required this.navbarController,
@@ -82,11 +87,10 @@ class buildNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: AlignmentGeometry.bottomCenter,
+      alignment: Alignment.bottomCenter,
       child: Container(
         margin: EdgeInsets.only(bottom: Get.height * 0.05),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        // height: 20,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         width: Get.width * 0.7,
         decoration: BoxDecoration(
           color: AppColor.textDark,
@@ -94,40 +98,37 @@ class buildNavbar extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ...List.generate(_icons.length, (index) {
-              bool isSelected = navbarController.selectedIndex.value == index;
-              return GestureDetector(
-                onTap: () => navbarController.changePage(index),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        _icons[index],
-                        size: 28,
-                        color:
-                            isSelected
-                                ? AppColor.primaryYellow
-                                : AppColor.backgroundCream,
+          children: List.generate(_icons.length, (index) {
+            bool isSelected = navbarController.selectedIndex.value == index;
+            return GestureDetector(
+              onTap: () => navbarController.changePage(index),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      _icons[index],
+                      size: 28,
+                      color: isSelected
+                          ? AppColor.primaryYellow
+                          : AppColor.backgroundCream,
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      margin: const EdgeInsets.only(top: 6),
+                      height: 3,
+                      width: isSelected ? 20 : 0,
+                      decoration: BoxDecoration(
+                        color: AppColor.primaryYellow,
+                        borderRadius: BorderRadius.circular(2),
                       ),
-                      AnimatedContainer(
-                        duration: Duration(milliseconds: 200),
-                        margin: EdgeInsets.only(top: 6),
-                        height: 3,
-                        width: isSelected ? 20 : 0,
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryYellow,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            }),
-          ],
+              ),
+            );
+          }),
         ),
       ),
     );

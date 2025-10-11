@@ -6,4 +6,5 @@ class Routes {
   static const NAVBAR = '/navbar';
   static const HOME = '/home';
   static const CREATEDETAIL = '/detail-create';
+  static const CHAT = '/chat';
 }
