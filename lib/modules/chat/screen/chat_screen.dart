@@ -13,9 +13,11 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.backgroundCream,
       resizeToAvoidBottomInset: true, // agar isi naik saat keyboard muncul
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.backgroundCream,
+
         elevation: 0,
         centerTitle: true,
         title: const Text(
@@ -36,155 +38,163 @@ class ChatScreen extends StatelessWidget {
                 color: Colors.white,
                 size: 20,
               ),
-              onPressed: () => Get.back(),
+         onPressed: () => Get.offAllNamed('/navbar'),
+
             ),
           ),
         ),
       ),
 
       // BODY — dibungkus dengan SafeArea + Expanded scroll
-      body: SafeArea(
-        child: GestureDetector(
-          onTap:
-              () =>
-                  FocusScope.of(
-                    context,
-                  ).unfocus(), // 👉 Tutup keyboard saat tap di luar
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: Get.width,
-                        height: Get.height * 0.25,
-                        child: Image.asset(
-                          'assets/logo/Logo3.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Sapaan
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Hi ',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: AppColor.textDark,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '${homeController.nama.value}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: AppColor.primaryYellow,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            ', How are you today?',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: AppColor.textDark,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-
-                      // Kalender
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColor.accentOlive,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.calendar_month,
-                                size: 25,
-                                color: AppColor.backgroundCream,
-                              ),
-                              Text(
-                                '1 Januari 2025',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColor.backgroundCream,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 35,
-                                  color: AppColor.backgroundCream,
-                                ),
-                              ),
-                            ],
+      body: Container(
+        color: AppColor.backgroundCream,
+        child: SafeArea(
+          child: GestureDetector(
+            onTap:
+                () =>
+                    FocusScope.of(
+                      context,
+                    ).unfocus(), 
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: Get.width,
+                          height: Get.height * 0.25,
+                          child: Image.asset(
+                            'assets/logo/Logo3.png',
+                            fit: BoxFit.contain,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
-                      ChatKiku(),
-                      // Pesan kucing
-                    ],
+                        // Sapaan
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Hi ',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: AppColor.textDark,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              '${homeController.nama.value}',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: AppColor.primaryYellow,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              ', How are you today?',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: AppColor.textDark,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Kalender
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColor.accentOlive,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  size: 25,
+                                  color: AppColor.backgroundCream,
+                                ),
+                                Text(
+                                  chatController.day.value,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: AppColor.backgroundCream,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 35,
+                                    color: AppColor.backgroundCream,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        ChatKiku(),
+                        // Pesan kucing
+                      ],
+                    ),
                   ),
                 ),
-              ),
 
-              // Input Text (pindahkan ke bawah agar otomatis naik saat keyboard muncul)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Card(
-                  elevation: 8,
-                  color: AppColor.backgroundCream,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: TextField(
-                    controller: chatController.lineController,
+                // Input Text (pindahkan ke bawah agar otomatis naik saat keyboard muncul)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Card(
+                    elevation: 8,
+                    color: AppColor.backgroundCream,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextField(
+                      readOnly:
+                          chatController.lineController.value.text != ''
+                              ? true
+                              : false,
+                      controller: chatController.lineController,
 
-                    maxLines: 4,
-                    minLines: 1,
-                    decoration: InputDecoration(
-                      hintText: 'Tell me your day...',
-                      hintStyle: const TextStyle(color: Colors.black54),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          chatController.chatLine();
-                          chatController.lineText.value =
-                              chatController.lineController.text;
-                          chatController.lineController.clear();
-                        },
-                        icon: const Icon(Icons.send),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 20,
+                      maxLines: 4,
+                      minLines: 1,
+                      decoration: InputDecoration(
+                        hintText: 'Tell me your day...',
+                        hintStyle: const TextStyle(color: Colors.black54),
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            await chatController.chatLine();
+                            // chatController.lineText.value =
+                            //     chatController.lineController.text;
+                            // chatController.lineController.clear();
+                          },
+                          icon: const Icon(Icons.send),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                          horizontal: 20,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

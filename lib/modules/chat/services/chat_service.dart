@@ -9,7 +9,7 @@ class ChatService {
   Future<Map<String, dynamic>> chatKiku(String line) async {
     try {
       final token = await Helper().readToken();
-      // print(token);
+      print(token);
 
       // Cek token
       if (token == null || token.isEmpty) {
@@ -39,13 +39,15 @@ class ChatService {
 
       // Cek status kode
       final data = jsonDecode(response.body);
+      print(data);
+      print(response.statusCode);
 
       if (response.statusCode == 200 && data['status'] == true) {
         return {'status': true, 'data': data};
       } else {
         return {
           'status': false,
-          'message': 'Gagal memuat data (${response.statusCode})',
+          'message': data['message'] ?? 'Gagal memuat data',
         };
       }
     } catch (e) {

@@ -11,7 +11,7 @@ class Streak extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        height: Get.height * 0.2,
+        // height: Get.height * 0.21,
         width: Get.width,
         decoration: BoxDecoration(
           color: AppColor.backgroundCream,
@@ -248,18 +248,16 @@ class Streak extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Obx(() =>
-                    
-                    
-                    Text(
-                      '${homecontroller.streakData.value?.streaks ?? 0} days',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColor.backgroundCream,
-                        fontWeight: FontWeight.bold,
+                    Obx(
+                      () => Text(
+                        '${homecontroller.jumlahStreak.value ?? 0} days',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColor.backgroundCream,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    )
                   ],
                 ),
               ),

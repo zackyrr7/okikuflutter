@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "637033267633",
+    "project_id": "okiku2",
+    "storage_bucket": "okiku2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637033267633:android:05fe553026c594a7ecbd90",
+        "android_client_info": {
+          "package_name": "com.okiku.okiku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637033267633-1ofi040phrj2u4p51fvgu23qh8cv0dgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3NcYN6ALlIMBKBvxu82yyWzUtrpC_qag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637033267633-1ofi040phrj2u4p51fvgu23qh8cv0dgl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "637033267633-ejgnskd8up2ud7462lk9hh8jcr1hp74p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.okiku"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

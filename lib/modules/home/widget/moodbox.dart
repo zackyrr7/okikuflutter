@@ -88,7 +88,7 @@ class MoodBox extends StatelessWidget {
                     children: [
                       Image.asset(
                        homecontroller.mood.value == 'netral'
-                            ? 'assets/logo/Netral-active.png'
+                            ? 'assets/logo/Netral-acctive.png'
                             : 'assets/logo/Netral.png',
                         height: 60,
                         fit: BoxFit.cover,

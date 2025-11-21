@@ -3,15 +3,18 @@ import 'package:get/get.dart';
 import 'package:okiku/modules/home/model/jurnal_model.dart';
 import 'package:okiku/modules/home/model/streak_model.dart';
 import 'package:okiku/modules/home/services/dashboard_services.dart';
+import 'package:okiku/modules/home/widget/popup_edit_detail.dart';
 
 class Homecontroller extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     namaMood();
     streak();
     jurnalDashboard();
+    detailUser();
   }
 
   final storage = FlutterSecureStorage();
@@ -21,6 +24,13 @@ class Homecontroller extends GetxController {
   var mood = ''.obs;
   var streakData = Rxn<StreakWeek>();
   var jurnalData = <JurnalModel>[].obs;
+  var jumlahStreak = 0.obs;
+
+  //detail user
+  var ttl = ''.obs;
+  var gender = ''.obs;
+  var pekerjaan = ''.obs;
+  var foto = ''.obs;
 
   Future<void> logout() async {
     storage.deleteAll();
@@ -53,12 +63,60 @@ class Homecontroller extends GetxController {
     }
   }
 
+  Future<void> detailUser() async {
+    isLoading.value = true;
+    try {
+      final result = await _dashboardServices.detailUser();
+
+      if (result['status'] == true) {
+        print(result);
+
+        final data = result['data']?['data'];
+
+        if (data == null) {
+          print("DATA NULL");
+          return;
+        }
+
+        // Ambil foto dengan aman
+        final userFoto = data['foto'];
+
+        print("FOTO USER: $userFoto");
+
+        ttl.value = data['ttl'] ?? '';
+        gender.value = data['gender'] ?? '';
+        pekerjaan.value = data['pekerjaan'] ?? '';
+        foto.value = userFoto ?? '';
+      } else if (result['status'] == false &&
+          result['data']['message'] == 'Isi detail terlebih dahulu') {
+        Get.dialog(PopupEditDetail(), barrierDismissible: false);
+      } else {
+        Get.snackbar(
+          'Gagal',
+          result['message'] ?? 'Terjadi kesalahan',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      print(e);
+      Get.snackbar(
+        'Gagal',
+        'Terjadi kesalahan Server',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> streak() async {
     isLoading.value = true;
     try {
       final result = await _dashboardServices.streak();
+
       if (result['status'] == true) {
         streakData.value = StreakWeek.fromJson(result['data']);
+        jumlahStreak.value = result['data']['jumlahStreak'];
       } else {
         Get.snackbar(
           'Gagal',

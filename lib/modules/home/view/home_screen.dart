@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:okiku/constant.dart';
 import 'package:okiku/modules/auth/controller/auth_controller.dart';
+import 'package:okiku/modules/chat/controller/chat_controller.dart';
 import 'package:okiku/modules/home/controller/homeController.dart';
 import 'package:okiku/modules/home/widget/backgroud_header.dart';
 import 'package:okiku/modules/home/widget/history.dart';
@@ -11,6 +13,7 @@ import 'package:okiku/themes/app_color.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final Homecontroller homecontroller = Get.find<Homecontroller>();
+  final ChatController chatController = Get.find<ChatController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,23 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: Get.height * 0.1),
                     Row(
                       children: [
-                        CircleAvatar(radius: 35),
+                        Obx(
+                          () => CircleAvatar(
+                            backgroundColor: AppColor.primaryYellow,
+                            radius: 35,
+                            backgroundImage:
+                                homecontroller.foto.value.isNotEmpty
+                                    ? NetworkImage(
+                                      "$urlImage${homecontroller.foto.value}",
+                                    )
+                                    : null,
+                            child:
+                                homecontroller.foto.value.isEmpty
+                                    ? Icon(Icons.person, size: 35)
+                                    : null,
+                          ),
+                        ),
+
                         SizedBox(width: 15),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -57,20 +76,22 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: Get.height * 0.02),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Welcome, ',
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text: '${homecontroller.nama.value}!',
+                    Obx(
+                      () => RichText(
+                        text: TextSpan(
+                          text: 'Welcome, ',
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: '${homecontroller.nama.value}!',
 
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -84,6 +105,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextField(
+                      controller: chatController.lineController,
                       decoration: InputDecoration(
                         hintText: "Hello, How's your day? ",
                         hintStyle: TextStyle(
@@ -91,7 +113,13 @@ class HomeScreen extends StatelessWidget {
                         ),
                         suffixIcon: IconButton(
                           onPressed: () {
-                            Get.toNamed('/chat');
+                            if (chatController.lineController.value.text !=
+                                '') {
+                              Get.toNamed('/chat');
+                              chatController.chatLine();
+                            } else {
+                              Get.toNamed('/chat');
+                            }
                           },
                           icon: Icon(Icons.send),
                           color: AppColor.textDark,

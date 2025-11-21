@@ -162,7 +162,7 @@ class DetailUserController extends GetxController {
 
       if (result['status'] == true) {
         Get.snackbar('Berhasil', 'Data Kamu berhasil di simpan');
-        Get.offAndToNamed('/home');
+        Get.offAndToNamed('/navbar');
       } else {
         Get.snackbar(
           'Gagal',

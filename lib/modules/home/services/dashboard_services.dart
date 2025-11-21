@@ -8,7 +8,7 @@ class DashboardServices {
   Future<Map<String, dynamic>> namaMood() async {
     try {
       final token = await Helper().readToken();
-     
+
       // Cek token
       if (token == null || token.isEmpty) {
         Get.defaultDialog(
@@ -24,7 +24,6 @@ class DashboardServices {
         return {'status': false, 'message': 'Token tidak ditemukan'};
       }
 
-
       // Request API dengan Bearer token
       final response = await http.get(
         Uri.parse('$url/mood'),
@@ -33,16 +32,12 @@ class DashboardServices {
           'Authorization': 'Bearer $token',
         },
       );
-   
-      
 
       // Cek status kode
 
       final data = jsonDecode(response.body);
 
-
       if (response.statusCode == 200 && data['status'] == true) {
-       
         return {'status': true, 'data': data};
       } else {
         return {
@@ -55,6 +50,56 @@ class DashboardServices {
     }
   }
 
+  Future<Map<String, dynamic>> detailUser() async {
+    try {
+      final token = await Helper().readToken();
+
+      // Cek token
+      if (token == null || token.isEmpty) {
+        Get.defaultDialog(
+          title: 'Error',
+          middleText: "Sesi kamu sudah habis",
+          textConfirm: 'OK',
+          onConfirm: () {
+            Get.offAllNamed('/login');
+          },
+        );
+
+        // Tetap return Map agar konsisten
+        return {'status': false, 'message': 'Token tidak ditemukan'};
+      }
+
+      // Request API dengan Bearer token
+      final response = await http.get(
+        Uri.parse('$url/detailUser'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      // Cek status kode
+
+      final data = jsonDecode(response.body);
+      // print(data);
+
+      if (response.statusCode == 200 && data['status'] == true) {
+        return {'status': true, 'data': data};
+      } else if (data['status'] == false &&
+          data['message'] == 'Isi detail terlebih dahulu') {
+       return {'status': false, 'data': data};
+        
+      } else {
+        return {
+          'status': false,
+          'message':
+              data['message'] ?? 'Gagal memuat data (${response.statusCode})',
+        };
+      }
+    } catch (e) {
+      return {'status': false, 'message': 'Terjadi kesalahan server: $e'};
+    }
+  }
 
   Future<Map<String, dynamic>> streak() async {
     try {
@@ -84,14 +129,11 @@ class DashboardServices {
           'Authorization': 'Bearer $token',
         },
       );
-      
 
       // Cek status kode
       final data = jsonDecode(response.body);
 
-
       if (response.statusCode == 200 && data['status'] == true) {
-       
         return {'status': true, 'data': data};
       } else {
         return {
@@ -100,10 +142,10 @@ class DashboardServices {
         };
       }
     } catch (e) {
-      
       return {'status': false, 'message': 'Terjadi kesalahan server: $e'};
     }
   }
+
   Future<Map<String, dynamic>> jurnalDashboard() async {
     try {
       final token = await Helper().readToken();
@@ -132,16 +174,11 @@ class DashboardServices {
           'Authorization': 'Bearer $token',
         },
       );
-      
-      
 
       // Cek status kode
       final data = jsonDecode(response.body);
-   
-
 
       if (response.statusCode == 200 && data['status'] == true) {
-      
         return {'status': true, 'data': data};
       } else {
         return {
@@ -150,7 +187,6 @@ class DashboardServices {
         };
       }
     } catch (e) {
-      
       return {'status': false, 'message': 'Terjadi kesalahan server: $e'};
     }
   }

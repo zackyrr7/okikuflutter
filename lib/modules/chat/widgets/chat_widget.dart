@@ -26,8 +26,8 @@ class ChatKiku extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    'Purr… tell me, was your day paw-some or just meh? '
-                    'I’ve been curious all day, so don’t keep this kitty waiting~',
+                    'Gimana harimu, human? Ceritain yuk… biar Kiku bisa nemenin kamu',
+
                     style: TextStyle(color: AppColor.textDark, fontSize: 16),
                   ),
                 ),
@@ -78,7 +78,6 @@ class ChatKiku extends StatelessWidget {
                 ), // default 60, kecilkan untuk melambatkan
                 animate: true,
               );
-              
             } else {
               final hasil = chatController.hasil.value.trim();
               if (hasil.isEmpty) return const SizedBox.shrink();

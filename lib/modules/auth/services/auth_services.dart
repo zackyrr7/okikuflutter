@@ -54,6 +54,7 @@ class AuthServices {
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
+        print(data);
         String token2 = data['token'];
         final FlutterSecureStorage storage = FlutterSecureStorage();
         storage.write(key: 'token', value: token2);

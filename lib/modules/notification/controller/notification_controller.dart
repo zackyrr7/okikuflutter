@@ -26,22 +26,24 @@ class NotificationController extends GetxController {
     //   String? apnsToken = await _messaging.getAPNSToken();
     // }
 
-    // String? token = await _messaging.getToken();
-    // print("token ${token}");
-    // if (token != null) {
-    //   deviceToken.value = token;
-    // }
+    String? token = await _messaging.getToken();
+    print("token ${token}");
+    if (token != null) {
+      deviceToken.value = token;
+    }
     simpanTokenId();
   }
 
   Future<void> simpanTokenId() async {
     final tokenID = deviceToken.value;
+    print({'tokenID : $tokenID'});
     
 
     try {
       var result = await _notificationServices.simpanTokenId(tokenID);
 
       if (result['status'] == true) {
+        print('tersimpan');
         return;
       }
     } catch (e) {

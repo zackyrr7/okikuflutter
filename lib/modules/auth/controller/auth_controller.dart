@@ -34,6 +34,8 @@ class AuthController extends GetxController {
 
   Future<void> loginGoogle() async {
     isLoading.value = true;
+    await googleLogin.signOut();
+    // await googleLogin.disconnect();
 
     final googleUser = await googleLogin.signIn();
 
@@ -45,17 +47,18 @@ class AuthController extends GetxController {
     final email = googleUser?.email;
     final name = googleUser?.displayName;
     final googleId = googleUser?.id;
+    print(email);
+    print(name);
+    print(googleId);
 
     var result = await _authServices.loginGoogle(
       email.toString(),
       name.toString(),
       googleId.toString(),
     );
+    // print(result);
 
-    if (result['status'] == true && result['message'] == 'detail required') {
-      Get.offAndToNamed('/detail-create');
-    } else if (result['status'] == true &&
-        result['message'] != 'detail required') {
+    if (result['status'] == true) {
       Get.offAndToNamed('/navbar');
     } else {
       Get.snackbar(
@@ -169,8 +172,6 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
   }
-
-
 
   Future<void> logout() async {
     storage.deleteAll();
