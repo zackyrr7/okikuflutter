@@ -45,6 +45,7 @@ dependencies:
   month_year_picker: ^0.5.0+1
   permission_handler: ^12.0.1
   shared_preferences: ^2.5.3
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -52,12 +53,12 @@ dev_dependencies:
     sdk: flutter
 
 icons_launcher:
-    image_path: "assets/logo/Logo3.png"
-    platforms:
-      android:
-        enable: true
-      ios:
-        enable: true
+  image_path: "assets/logo/Logo3.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -96,4 +97,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-  

@@ -6,6 +6,7 @@ import 'package:okiku/modules/profile/widget/header_profile.dart';
 import 'package:okiku/modules/profile/widget/popup_akun.dart';
 import 'package:okiku/modules/profile/widget/popup_keluar.dart';
 import 'package:okiku/themes/app_color.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -89,35 +90,47 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 16, right: 16),
+                  //   child: Divider(color: AppColor.primaryYellow),
+                  // ),
+                  // GestureDetector(
+                  //   child: Container(
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(16.0),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Row(
+                  //             children: [
+                  //               Icon(Icons.help),
+                  //               SizedBox(width: Get.width * 0.02),
+                  //               Text('Support'),
+                  //             ],
+                  //           ),
+                  //           Icon(Icons.arrow_right),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     child: Divider(color: AppColor.primaryYellow),
                   ),
                   GestureDetector(
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.help),
-                                SizedBox(width: Get.width * 0.02),
-                                Text('Support'),
-                              ],
-                            ),
-                            Icon(Icons.arrow_right),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: Divider(color: AppColor.primaryYellow),
-                  ),
-                  GestureDetector(
+                    onTap: () async {
+                      final url = Uri.parse('http://okiku.web.id/privacy');
+
+                      final can = await canLaunchUrl(url);
+                      print("Can launch? $can"); // debug
+
+                      await launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    },
+
                     child: Container(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),

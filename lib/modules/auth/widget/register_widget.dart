@@ -6,7 +6,7 @@ import 'package:okiku/themes/app_color.dart';
 class RegisterWidget extends StatelessWidget {
   RegisterWidget({super.key});
 
-  final AuthController authController = Get.find<AuthController>();
+  final AuthController authController =  Get.put<AuthController>(AuthController());
 
   @override
   Widget build(BuildContext context) {

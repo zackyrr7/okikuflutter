@@ -7,8 +7,8 @@
 // 192.168.1.62
 // 172.16.2.229
 
-var url = 'http://192.168.1.137:8000/api';
-var urlImage = 'http://192.168.1.137:8000/storage/';
+var url = 'http://okiku.web.id/api';
+var urlImage = 'http://okiku.web.id/storage/';
 // 192.168.110.226 
 
 

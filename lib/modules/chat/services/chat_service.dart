@@ -9,8 +9,7 @@ class ChatService {
   Future<Map<String, dynamic>> chatKiku(String line) async {
     try {
       final token = await Helper().readToken();
-      print(token);
-
+     
       // Cek token
       if (token == null || token.isEmpty) {
         Get.defaultDialog(

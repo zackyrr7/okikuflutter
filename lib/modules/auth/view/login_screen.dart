@@ -47,18 +47,21 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SwitchLogin(),
-                  SizedBox(height: 20),
-                  Obx(() {
-                    authController.nameController.clear();
-                    authController.emailController.clear();
-                    authController.passwordController.clear();
-                    authController.passwordVerifController.clear();
-                    authController.secureText.value = true;
-                    authController.secureText2.value = true;
-                    return authController.isLoginIsSelected.value
-                        ? LoginWidget()
-                        : RegisterWidget();
-                  }),
+                  // SizedBox(height: 20),
+                  Flexible(
+                    child: Obx(() {
+                      authController.nameController.clear();
+                      authController.emailController.clear();
+                      authController.passwordController.clear();
+                      authController.passwordVerifController.clear();
+                      authController.secureText.value = true;
+                      authController.secureText2.value = true;
+                      return authController.isLoginIsSelected.value
+                          ? LoginWidget()
+                          : RegisterWidget();
+                    }),
+                  ),
+                  
                 ],
               ),
             ),

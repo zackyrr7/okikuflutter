@@ -101,11 +101,15 @@ class AuthController extends GetxController {
       var result = await _authServices.register(name, email, password);
 
       if (result['status'] == true) {
-        Get.offAndToNamed('/navbar');
-        emailController.clear();
-        nameController.clear();
-        passwordController.clear();
-        passwordVerifController.clear();
+        if (result['message'] == 'detail required') {
+          Get.offAndToNamed('/detail-create-awal');
+        } else {
+          Get.offAndToNamed('/navbar');
+          emailController.clear();
+          nameController.clear();
+          passwordController.clear();
+          passwordVerifController.clear();
+        }
       } else {
         Get.snackbar(
           'Register Gagal',

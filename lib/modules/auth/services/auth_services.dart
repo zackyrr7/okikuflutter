@@ -52,6 +52,7 @@ class AuthServices {
         body: {'email': email, 'name': name, 'password': password},
       );
 
+
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         print(data);

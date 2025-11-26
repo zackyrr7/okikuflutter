@@ -4,22 +4,20 @@ import 'package:okiku/modules/detail/controller/detailUserController.dart';
 import 'package:okiku/modules/home/controller/homeController.dart';
 import 'package:okiku/themes/app_color.dart';
 
-class CreateDetailView extends StatelessWidget {
-  CreateDetailView({super.key});
+class CreateDetailViewAwal extends StatelessWidget {
+  CreateDetailViewAwal({super.key});
   final DetailUserController detailusercontroller = Get.put(
     DetailUserController(),
   );
-  final Homecontroller homeController =  Get.put<Homecontroller>(Homecontroller());
 
   @override
   Widget build(BuildContext context) {
-    detailusercontroller.ttlController.text = homeController.ttl.value;
-    detailusercontroller.genderController.text = homeController.gender.value;
-    detailusercontroller.pekerjaanController.text =
-        homeController.pekerjaan.value;
     return Scaffold(
       // backgroundColor: Colors.amber,
-      appBar: AppBar(backgroundColor: AppColor.backgroundCream),
+      appBar: AppBar(
+        backgroundColor: AppColor.backgroundCream,
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
         color: AppColor.backgroundCream,
         child: SafeArea(
@@ -59,14 +57,7 @@ class CreateDetailView extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Text(
-                              '${homeController.nama.value}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: AppColor.primaryYellow,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+
                             Text(
                               ', kenalan dulu yuk?',
                               style: TextStyle(

@@ -8,6 +8,8 @@ class DashboardServices {
   Future<Map<String, dynamic>> namaMood() async {
     try {
       final token = await Helper().readToken();
+      print('token di dashboard services: $token');
+    
 
       // Cek token
       if (token == null || token.isEmpty) {
@@ -36,6 +38,7 @@ class DashboardServices {
       // Cek status kode
 
       final data = jsonDecode(response.body);
+      
 
       if (response.statusCode == 200 && data['status'] == true) {
         return {'status': true, 'data': data};
@@ -46,7 +49,8 @@ class DashboardServices {
         };
       }
     } catch (e) {
-      return {'status': false, 'message': 'Terjadi kesalahan server: $e'};
+      print('errorrr : $e');
+      return {'status': false, 'message': 'Terjadi kesalahan serverrrrrr: $e'};
     }
   }
 

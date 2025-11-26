@@ -8,6 +8,7 @@ import 'package:okiku/binding/home/HomeBinding.dart';
 import 'package:okiku/modules/auth/view/intro_screen.dart';
 import 'package:okiku/modules/auth/view/login_screen.dart';
 import 'package:okiku/modules/chat/screen/chat_screen.dart';
+import 'package:okiku/modules/detail/view/create_detail_awal_view.dart';
 import 'package:okiku/modules/detail/view/create_detail_view.dart';
 import 'package:okiku/modules/history/screen/history_screen.dart';
 import 'package:okiku/modules/home/view/home_screen.dart';
@@ -40,6 +41,11 @@ class AppPages {
     GetPage(
       name: Routes.CREATEDETAIL,
       page: () => CreateDetailView(),
+      binding: Detailuserbinding(),
+    ),
+    GetPage(
+      name: Routes.CREATEDETAILAWAL,
+      page: () => CreateDetailViewAwal(),
       binding: Detailuserbinding(),
     ),
 

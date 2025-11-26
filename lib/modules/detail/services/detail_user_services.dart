@@ -11,7 +11,8 @@ class DetailUserServices {
   String pekerjaan,
 ) async {
   try {
-    var token = await Helper().readToken(); // Pastikan ini async
+    var token = await Helper().readToken(); 
+   
     var urlApi = Uri.parse('$url/simpanDetail');
 
     var response = await http.post(
@@ -26,6 +27,8 @@ class DetailUserServices {
         'pekerjaan': pekerjaan,
       }),
     );
+print(response.statusCode);
+print(response.body);
   
 
     if (response.statusCode == 200) {
