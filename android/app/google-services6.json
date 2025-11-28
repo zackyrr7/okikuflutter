@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "637033267633-f338cde08iv4mrf9p9dq7kan9lg2bv6i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.okiku.okiku",
-            "certificate_hash": "386a81972902525162e7283fc364670c10a0e2b2"
-          }
-        },
-        {
           "client_id": "637033267633-ni541r55dpo5k9jinft8o3ab6bhaj83u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

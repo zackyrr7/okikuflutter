@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:okiku/modules/chat/services/chat_service.dart';
 import 'package:okiku/modules/chat/widgets/streak_widget.dart';
+import 'package:okiku/modules/home/controller/homeController.dart';
 import 'package:okiku/themes/app_color.dart';
 import 'package:intl/intl.dart';
 
@@ -49,6 +50,7 @@ class ChatController extends GetxController {
           streakKalimat.value = 'Kamu sudah mencapai ${streak.value} streak';
         }
         Get.dialog(StreakWidget(streakKalimat: streakKalimat));
+        Get.reload<Homecontroller>();
       } else {
         result['message'] == 'Kamu sudah cerita hari ini'
             ? Get.dialog(
